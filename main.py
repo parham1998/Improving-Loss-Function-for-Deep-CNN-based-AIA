@@ -33,8 +33,6 @@ parser.add_argument('--data', metavar='NAME',
                     help='dataset name (e.g. corel-5k)')
 parser.add_argument('--evaluate', dest='evaluate', action='store_true',
                     help='evaluation of the model on the validation set')
-parser.add_argument('--resume', dest='resume', action='store_true',
-                    help='resuming training from the latest checkpoint')
 parser.add_argument(
     '--save_dir', default='./checkpoints/', type=str, help='save path')
 
@@ -80,13 +78,7 @@ def main(args):
                     len(classes))
 
     if is_train:
-        if not args.resume:
             engine.initialization(is_train)
-            engine.train_iteration()
-        else:
-            engine.initialization(is_train)
-            print('Resuming training from the latest checkpoint: ')
-            engine.load_model()
             engine.train_iteration()
     else:
         engine.initialization(is_train)
@@ -94,7 +86,7 @@ def main(args):
         print('Computing best thresholds: ')
         best_thresholds = engine.matthew_corrcoef(train_loader)
         print(best_thresholds)
-        engine.validation(validation_loader,
+        engine.validation(dataloader=validation_loader,
                           mcc=True,
                           thresholds=best_thresholds)
         # show images and predicted labels

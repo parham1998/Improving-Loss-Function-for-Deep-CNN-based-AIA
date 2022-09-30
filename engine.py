@@ -67,6 +67,14 @@ class Engine():
             #
             self.model.cuda()
 
+    def PR_RC_F1_Nplus(self, results):
+        N_plus = 'N+: {:.0f}'.format(results['N+'])
+        per_class_metrics = 'per-class precision: {:.4f} \t per-class recall: {:.4f} \t per-class f1: {:.4f}'.format(
+            results['per_class/precision'], results['per_class/recall'], results['per_class/f1'])
+        per_image_metrics = 'per-image precision: {:.4f} \t per-image recall: {:.4f} \t per-image f1: {:.4f}'.format(
+            results['per_image/precision'], results['per_image/recall'], results['per_image/f1'])
+        return N_plus, per_class_metrics, per_image_metrics
+
     def load_model(self):
         self.model.load_state_dict(torch.load(self.model.path))
         if self.train_on_GPU():
@@ -75,7 +83,7 @@ class Engine():
     def save_model(self):
         torch.save(self.model.state_dict(), self.model.path)
 
-    def train(self, epoch, dataloader, thresholds=0.5):
+    def train(self, dataloader, epoch=None, thresholds=0.5):
         train_loss = 0
         total_outputs = []
         total_targets = []
@@ -110,21 +118,23 @@ class Engine():
             total_outputs.append(torch.sigmoid(outputs))
             total_targets.append(targets)
 
-        result = self.metrics.calculate_metrics(
+        results = self.metrics.calculate_metrics(
             torch.cat(total_targets),
             torch.cat(total_outputs),
             thresholds,
             self.num_classes)
         print('Epoch: {}'.format(epoch+1))
         print('Train Loss: {:.5f}'.format(train_loss/(batch_idx+1)))
-        print('N+: {:.0f}'.format(result['N+']))
-        print('per-class precision: {:.4f} \t per-class recall: {:.4f} \t per-class f1: {:.4f}'.format(
-            result['per_class/precision'], result['per_class/recall'], result['per_class/f1']))
-        print('per-image precision: {:.4f} \t per-image recall: {:.4f} \t per-image f1: {:.4f}'.format(
-            result['per_image/precision'], result['per_image/recall'], result['per_image/f1']))
+        #
+        N_plus, per_class_metrics, per_image_metrics = self.PR_RC_F1_Nplus(
+            results)
+        print(N_plus)
+        print(per_class_metrics)
+        print(per_image_metrics)
 
     def validation(self,
                    dataloader,
+                   epoch=None,
                    mcc=False,  # mcc: Matthews correlation coefficien
                    thresholds=0.5):
         if not mcc:
@@ -148,34 +158,44 @@ class Engine():
                 total_outputs.append(torch.sigmoid(outputs))
                 total_targets.append(targets)
 
-        result = self.metrics.calculate_metrics(
+        results = self.metrics.calculate_metrics(
             torch.cat(total_targets),
             torch.cat(total_outputs),
             thresholds,
             self.num_classes)
         if not mcc:
             print('Validation Loss: {:.5f}'.format(valid_loss/(batch_idx+1)))
-        print('N+: {:.0f}'.format(result['N+']))
-        print('per-class precision: {:.4f} \t per-class recall: {:.4f} \t per-class f1: {:.4f}'.format(
-            result['per_class/precision'], result['per_class/recall'], result['per_class/f1']))
-        print('per-image precision: {:.4f} \t per-image recall: {:.4f} \t per-image f1: {:.4f}'.format(
-            result['per_image/precision'], result['per_image/recall'], result['per_image/f1']))
+        #
+        N_plus, per_class_metrics, per_image_metrics = self.PR_RC_F1_Nplus(
+            results)
+        print(N_plus)
+        print(per_class_metrics)
+        print(per_image_metrics)
 
         # save model when 'per-class f1-score' of the validation set improved
         if not mcc:
-            if result['per_class/f1'] > self.best_f1_score:
+            if results['per_class/f1'] > self.best_f1_score:
                 print('per-class f1 increased ({:.4f} --> {:.4f}). saving model ...'.format(
-                    self.best_f1_score, result['per_class/f1']))
+                    self.best_f1_score, results['per_class/f1']))
                 # save the model's best result on the 'checkpoints' folder
                 self.save_model()
-                self.best_f1_score = result['per_class/f1']
+                #
+                lines = ['Epoch: ' + str(epoch+1),
+                         N_plus,
+                         per_class_metrics,
+                         per_image_metrics]
+                with open(self.args.save_dir + self.args.data + '_validation_results.txt', 'w') as f:
+                    f.write('\n'.join(lines))
+                f.close()
+                #
+                self.best_f1_score = results['per_class/f1']
 
     def train_iteration(self):
         print('==> Start of Training ...')
         for epoch in range(self.args.epochs):
             start = timeit.default_timer()
-            self.train(epoch, self.train_loader)
-            self.validation(self.validation_loader)
+            self.train(self.train_loader, epoch)
+            self.validation(self.validation_loader, epoch)
             print('LR {:.1e}'.format(self.scheduler.get_last_lr()[0]))
             stop = timeit.default_timer()
             print('time: {:.3f}'.format(stop - start))
