@@ -54,13 +54,13 @@ class AnnotationDataset(torch.utils.data.Dataset):
 # Make data loader
 # =============================================================================
 def get_mean_std(args):
-    if args.data == 'corel-5k':
+    if args.data == 'Corel-5k':
         mean = [0.3928, 0.4079, 0.3531]
         std = [0.2559, 0.2436, 0.2544]
-    elif args.data == 'esp-game':
+    elif args.data == 'ESP-Game':
         mean = [0.5377, 0.5087, 0.4845]
         std = [0.3244, 0.3181, 0.3254]
-    elif args.data == 'iapr-tc-12':
+    elif args.data == 'IAPR-TC-12':
         mean = [0.4901, 0.4739, 0.4489]
         std = [0.2557, 0.2543, 0.2769]
     else:

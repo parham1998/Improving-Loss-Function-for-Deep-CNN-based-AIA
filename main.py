@@ -30,7 +30,7 @@ parser.add_argument('--learning-rate', default=0.0001, type=float)
 parser.add_argument('--loss-function', metavar='NAME',
                     help='loss function (e.g. BCELoss)')
 parser.add_argument('--data', metavar='NAME',
-                    help='dataset name (e.g. corel-5k)')
+                    help='dataset name (e.g. Corel-5k)')
 parser.add_argument('--evaluate', dest='evaluate', action='store_true',
                     help='evaluation of the model on the validation set')
 parser.add_argument(
