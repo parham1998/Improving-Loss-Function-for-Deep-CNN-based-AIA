@@ -20,7 +20,7 @@ To train the model on Spyder IDE use the code below:
 run main.py --data {select training dataset} --loss-function {select loss function}
 ```
 Please note that:
-1) You should put **corel-5k**, **esp-game** or **iapr-tc-12** in {select training dataset}.
+1) You should put **Corel-5k**, **ESP-Game** or **IAPR-TC-12** in {select training dataset}.
 
 2) You should put the **proposedLoss** in {select loss function}.
 
