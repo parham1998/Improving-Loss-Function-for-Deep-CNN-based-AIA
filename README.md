@@ -14,8 +14,8 @@ There are three well-known datasets that are mostly used in AIA tasks. The table
 **TResNet-m**
 ![TResNet_m](https://user-images.githubusercontent.com/85555218/193331034-a1d6e21f-ef22-4ac5-91ba-8cba8882efc8.png)
 
-## Train and Validation
-To train the model on Spyder IDE use the code below:
+## Train and Evaluation
+To train the model in Spyder IDE use the code below:
 ```python
 run main.py --data {select training dataset} --loss-function {select loss function}
 ```
@@ -24,7 +24,7 @@ Please note that:
 
 2) You should put the **proposedLoss** in {select loss function}.
 
-To validate the model on Spyder IDE use the code below:
+To evaluate the model in Spyder IDE use the code below:
 ```python
 run main.py --data {select training dataset} --loss-function {select loss function} --evaluate
 ```
