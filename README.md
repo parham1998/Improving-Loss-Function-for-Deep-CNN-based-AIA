@@ -11,8 +11,8 @@ There are three well-known datasets that are mostly used in AIA tasks. The table
 | [ESP Game](https://www.kaggle.com/datasets/parhamsalar/espgame) | 20,770 | 18,689 | 2081 | 268 | 4.7 | 362.7 |
 
 ## Convolutional model
-**TResNet-m**
-![TResNet_m](https://user-images.githubusercontent.com/85555218/193331034-a1d6e21f-ef22-4ac5-91ba-8cba8882efc8.png)
+**TResNet-M**
+![TResNet-M](https://user-images.githubusercontent.com/85555218/198952123-391fdfe0-4bd2-4129-982c-c1074279b099.png)
 
 ## Train and Evaluation
 To train the model in Spyder IDE use the code below:
