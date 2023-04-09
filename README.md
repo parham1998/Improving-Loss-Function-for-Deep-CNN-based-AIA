@@ -1,5 +1,5 @@
 # Improving Loss Function for Deep CNN-based AIA
-This is the official PyTorch implementation of the paper "[Improving Loss Function for Deep CNN-based Automatic Image Annotation]()"
+This is the official PyTorch implementation of the paper "[Improving loss function for deep convolutional neural network applied in automatic image annotation]()"
 
 ## Datasets
 There are three well-known datasets that are mostly used in AIA tasks. The table below provides details about these datasets. It is also possible to download them by the given links. (After downloading each dataset, replace its 'images' folder with the corresponding 'images' folder in the 'datasets' folder).
