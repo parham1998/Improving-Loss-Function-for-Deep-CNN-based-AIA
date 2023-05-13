@@ -22,7 +22,7 @@ parser.add_argument('--seed', default=1, type=int,
                     help='seed for initializing training')
 parser.add_argument('--data_root_dir', default='./datasets/', type=str)
 parser.add_argument('--image-size', default=448, type=int)
-parser.add_argument('--epochs', default=80, type=int)
+parser.add_argument('--epochs', default=40, type=int)
 parser.add_argument('--batch-size', default=32, type=int)
 parser.add_argument('--num_workers', default=2, type=int,
                     help='number of data loading workers (default: 2)')

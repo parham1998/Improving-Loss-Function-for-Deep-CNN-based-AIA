@@ -199,10 +199,6 @@ class Engine():
             print('LR {:.1e}'.format(self.scheduler.get_last_lr()[0]))
             stop = timeit.default_timer()
             print('time: {:.3f}'.format(stop - start))
-            # early stop
-            if epoch == 59:
-                print('Early stop is active')
-                break
         print('==> End of training ...')
 
     def matthew_corrcoef(self, dataloader):
