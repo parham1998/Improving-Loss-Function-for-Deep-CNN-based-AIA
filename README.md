@@ -17,6 +17,9 @@ There are three well-known datasets that are mostly used in AIA tasks. The table
 **TResNet-M**
 ![TResNet-M](https://user-images.githubusercontent.com/85555218/198952123-391fdfe0-4bd2-4129-982c-c1074279b099.png)
 
+## The proposed Loss Function
+![Picture1](https://github.com/parham1998/Improving-Loss-Function-for-Deep-CNN-based-AIA/assets/85555218/2feaf2a2-4be3-455a-baa1-b8d322dcc572)
+
 ## Train and Evaluation
 To train the model in Spyder IDE use the code below:
 ```python
