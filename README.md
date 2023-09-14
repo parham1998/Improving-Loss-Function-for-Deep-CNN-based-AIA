@@ -48,6 +48,16 @@ IAPR TC-12 | 0.562 | 0.515 | **0.537** | **277** |
 ESP Game | 0.508 | 0.421 | **0.461** | **255** |
 
 ## Citation
-
+Please consider citing our paper in your publications if the project helps your research. BibTeX reference is as follows:
+```
+@article{salar2023improving,
+  title={Improving loss function for deep convolutional neural network applied in automatic image annotation},
+  author={Salar, Ali and Ahmadi, Ali},
+  journal={The Visual Computer},
+  pages={1--13},
+  year={2023},
+  publisher={Springer}
+}
+```
 ## Contact
 I would be happy to answer any questions you may have - Ali Salar (parham1998resume@gmail.com)
